@@ -8,6 +8,10 @@ version = "0.1.0"
 description = "Interactive CLI for manually scrobbling albums (vinyl-friendly) to Last.fm"
 readme = "README.md"
 requires-python = ">=3.10"
+license = { file = "LICENSE" }
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+]
 dependencies = [
   "platformdirs>=4.2.2",
   "questionary>=2.0.1",
