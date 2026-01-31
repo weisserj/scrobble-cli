@@ -1,6 +1,8 @@
 # scrobble-cli
 
-I wanted to scrobble my vinyl records while I’m already living in a terminal (often inside Claude Code), so I built a tiny CLI that:
+An open-source (MIT) CLI for scrobbling vinyl records from your terminal (I originally built it because I wanted to do this while already in Claude Code).
+
+It:
 
 - Looks up an album on Discogs (tracklist + durations)
 - Lets you pick the correct release in a TUI (unless it’s extremely confident)
