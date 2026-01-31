@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from datetime import datetime
 
 import questionary
@@ -106,6 +107,8 @@ def scrobble_album_command(
   allow_ignored: bool = typer.Option(
     False, "--allow-ignored", help="Exit 0 even if Last.fm ignores some tracks (still prints details)"
   ),
+  search_only: bool = typer.Option(False, "--search-only", help="Print search results as JSON and exit"),
+  pick: int | None = typer.Option(None, "--pick", help="Select result by number (1-indexed), skipping interactive selection"),
 ):
   """
   Scrobble an album by looking up its tracklist on Discogs, then submitting a single batch to Last.fm.
@@ -137,8 +140,28 @@ def scrobble_album_command(
   if not results:
     raise typer.Exit(code=2)
 
+  if search_only:
+    items = []
+    for i, r in enumerate(results, start=1):
+      items.append({
+        "number": i,
+        "title": r.title,
+        "year": r.year,
+        "format": r.format,
+        "label": r.label,
+        "catno": r.catno,
+        "type": r.kind,
+      })
+    console.print_json(json.dumps(items))
+    raise typer.Exit(code=0)
+
   selected = None
-  if auto:
+  if pick is not None:
+    if pick < 1 or pick > len(results):
+      console.print(f"--pick must be between 1 and {len(results)}.")
+      raise typer.Exit(code=2)
+    selected = results[pick - 1]
+  elif auto:
     top = results[0]
     if artist and album:
       confidence = discogs_title_confidence(artist=artist, album=album, discogs_title=top.title)
@@ -150,10 +173,10 @@ def scrobble_album_command(
   if not selected:
     _render_results(results)
     choices = [f"{i}. {r.title} [{r.kind}] {r.year or ''}".strip() for i, r in enumerate(results, start=1)]
-    picked = questionary.select("Pick the correct release:", choices=choices).ask()
-    if not picked:
+    picked_choice = questionary.select("Pick the correct release:", choices=choices).ask()
+    if not picked_choice:
       raise typer.Exit(code=1)
-    idx = int(picked.split(".", 1)[0]) - 1
+    idx = int(picked_choice.split(".", 1)[0]) - 1
     selected = results[idx]
 
   release = fetch_release(cfg, kind=selected.kind, id=selected.id)
