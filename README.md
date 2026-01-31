@@ -102,3 +102,7 @@ scrobble status
 - Double-check before pushing:
   - `git status` shows no secrets added
   - `rg -n "LASTFM_|DISCOGS_|api_key|api_secret|session_key|token=" -S .`
+
+## License
+
+MIT. See `LICENSE`.
