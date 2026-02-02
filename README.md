@@ -20,7 +20,9 @@ It:
 
 ## Screenshots
 
-![Discogs release picker](3227b58a-3776-40da-9bae-1d92f281c896.jpg)
+| | |
+|---|---|
+| ![Discogs release picker](3227b58a-3776-40da-9bae-1d92f281c896.jpg) | ![Scrobble confirmation](b2d9874b-bce5-435d-a953-0d374e513f76.jpg) |
 
 ## Install
 
