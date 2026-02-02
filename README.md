@@ -5,7 +5,7 @@ An open-source (MIT) CLI for scrobbling vinyl records from your terminal (I orig
 It:
 
 - Looks up an album on Discogs (tracklist + durations)
-- Lets you pick the correct release in a TUI (unless it’s extremely confident)
+- Lets you pick the correct release in a TUI (unless it's extremely confident)
 - Scrobbles the whole album to Last.fm in one go
 
 ## Features
@@ -13,10 +13,14 @@ It:
 - Album scrobbling designed for vinyl (Discogs-first tracklists)
 - Interactive release picker (TUI)
 - Timestamp modes:
-  - “started now” (default): you’re putting it on right as you run the command
-  - “ended now”: prefix the query with `ended`
+  - "started now" (default): you're putting it on right as you run the command
+  - "ended now": prefix the query with `ended`
 - `--dry-run` to preview without sending anything
 - `--allow-ignored` if Last.fm ignores some tracks (e.g. very short interludes)
+
+## Screenshots
+
+![Discogs release picker](3227b58a-3776-40da-9bae-1d92f281c896.jpg)
 
 ## Install
 
@@ -97,10 +101,10 @@ scrobble album barney wilen moshi --allow-ignored
 scrobble status
 ```
 
-## Publishing / safety checklist (don’t leak tokens)
+## Publishing / safety checklist (don't leak tokens)
 
 - Never paste tokens into `README.md`, issues, or commit messages.
-- Confirm you’re not committing local workspace artifacts: `.context/` is ignored via `.gitignore`.
+- Confirm you're not committing local workspace artifacts: `.context/` is ignored via `.gitignore`.
 - Double-check before pushing:
   - `git status` shows no secrets added
   - `rg -n "LASTFM_|DISCOGS_|api_key|api_secret|session_key|token=" -S .`
