@@ -103,6 +103,51 @@ scrobble album barney wilen moshi --allow-ignored
 scrobble status
 ```
 
+## Claude Code skill
+
+scrobble-cli was built to be used from [Claude Code](https://claude.com/claude-code). The `/scrobble` skill lets you scrobble vinyl without leaving your session.
+
+### Setup
+
+1. Clone and install (see [Install](#install) above)
+
+2. Copy the skill file into your global Claude Code commands:
+
+```bash
+cp claude-code/scrobble.md ~/.claude/commands/scrobble.md
+```
+
+3. Replace `SCROBBLE_CLI_PATH` in the copied file with the absolute path to your clone:
+
+```bash
+# macOS / Linux
+sed -i'' -e "s|SCROBBLE_CLI_PATH|$(pwd)|g" ~/.claude/commands/scrobble.md
+```
+
+4. Add a Bash permission so the wrapper runs without prompting. Add this to `~/.claude/settings.local.json` under `permissions.allow`:
+
+```json
+"Bash(/absolute/path/to/scrobble-cli/scrobble-wrapper.sh:*)"
+```
+
+5. Set up auth (one-time, in your regular terminal):
+
+```bash
+source .venv/bin/activate
+scrobble auth discogs
+scrobble auth lastfm
+```
+
+### Usage in Claude Code
+
+```
+/scrobble miles davis kind of blue
+/scrobble ended barney wilen moshi
+/scrobble coltrane a love supreme --dry-run
+```
+
+The skill searches Discogs, shows you the results, and scrobbles once you pick a release.
+
 ## Publishing / safety checklist (don't leak tokens)
 
 - Never paste tokens into `README.md`, issues, or commit messages.
