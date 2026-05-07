@@ -155,11 +155,12 @@ def fetch_release(cfg: AppConfig, *, kind: str, id: int) -> DiscogsRelease:
 
   artist, album = _split_title(str(data.get("title") or ""))
 
+  artists = data.get("artists") or []
+  if artists and isinstance(artists, list):
+    artist = _clean_artist_name(str(artists[0].get("name") or ""))
+
   if kind == "master":
     album = str(data.get("title") or "").strip()
-    artists = data.get("artists") or []
-    if artists and isinstance(artists, list):
-      artist = _clean_artist_name(str(artists[0].get("name") or ""))
 
   tracklist = data.get("tracklist") or []
   tracks: list[DiscogsTrack] = []
